@@ -55,7 +55,7 @@
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="public/img/icon-apartment.png" alt="Icon">
+                                    <img class="img-fluid" src="img/icon-apartment.png" alt="Icon">
                                 </div>
                                 <h6>Apartment</h6>
                                 <span>123 Properties</span>
@@ -66,7 +66,7 @@
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="public/img/icon-villa.png" alt="Icon">
+                                    <img class="img-fluid" src="img/icon-villa.png" alt="Icon">
                                 </div>
                                 <h6>Villa</h6>
                                 <span>123 Properties</span>
@@ -77,7 +77,7 @@
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="public/img/icon-house.png" alt="Icon">
+                                    <img class="img-fluid" src="img/icon-house.png" alt="Icon">
                                 </div>
                                 <h6>Home</h6>
                                 <span>123 Properties</span>
@@ -88,7 +88,7 @@
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="public/img/icon-housing.png" alt="Icon">
+                                    <img class="img-fluid" src="img/icon-housing.png" alt="Icon">
                                 </div>
                                 <h6>Office</h6>
                                 <span>123 Properties</span>
@@ -99,7 +99,7 @@
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="public/img/icon-building.png" alt="Icon">
+                                    <img class="img-fluid" src="img/icon-building.png" alt="Icon">
                                 </div>
                                 <h6>Building</h6>
                                 <span>123 Properties</span>
@@ -110,7 +110,7 @@
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="public/img/icon-neighborhood.png" alt="Icon">
+                                    <img class="img-fluid" src="img/icon-neighborhood.png" alt="Icon">
                                 </div>
                                 <h6>Townhouse</h6>
                                 <span>123 Properties</span>
@@ -121,7 +121,7 @@
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="public/img/icon-condominium.png" alt="Icon">
+                                    <img class="img-fluid" src="img/icon-condominium.png" alt="Icon">
                                 </div>
                                 <h6>Shop</h6>
                                 <span>123 Properties</span>
@@ -132,7 +132,7 @@
                         <a class="cat-item d-block bg-light text-center rounded p-3" href="">
                             <div class="rounded p-4">
                                 <div class="icon mb-3">
-                                    <img class="img-fluid" src="public/img/icon-luxury.png" alt="Icon">
+                                    <img class="img-fluid" src="img/icon-luxury.png" alt="Icon">
                                 </div>
                                 <h6>Garage</h6>
                                 <span>123 Properties</span>
