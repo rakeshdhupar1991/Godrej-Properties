@@ -9,6 +9,6 @@ class HomeController extends Controller
 {
     public function welcome()
     {
-        return view('pages.welcome');
+        return view('welcome');
     }
 }
