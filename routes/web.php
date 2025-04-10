@@ -20,4 +20,4 @@ use App\Http\Controllers\PropertiesController;
 //Welcome
 Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
 
-Route::get('/location/{city}', [PropertiesController::class, 'properties']);
+Route::get('/properties/{city}', [PropertiesController::class, 'location']);

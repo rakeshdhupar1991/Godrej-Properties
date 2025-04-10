@@ -22,16 +22,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{{ url('/index') }}" class="nav-item nav-link active">Home</a>
+                        <a href="{{ url('/') }}" class="nav-item nav-link active">Home</a>
                         <a href="{{ url('/property') }}" class="nav-item nav-link">Property</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" >Location</a>
                             <div class="dropdown-menu rounded-0 m-0">
                          
-                               <a href="{{ url('/location/Gurgaon') }}" class="dropdown-item">Gurgaon</a>
-                               <a href="{{ url('/location/Noida') }}" class="dropdown-item">Noida</a>
-                               <a href="{{ url('/location/Faridabad') }}" class="dropdown-item">Faridabad</a>
-                               <a href="{{ url('/location/Delhi') }}" class="dropdown-item">Delhi</a>
+                               <a href="{{ url('/properties/Gurgaon') }}" class="dropdown-item">Gurgaon</a>
+                               <a href="{{ url('/properties/Noida') }}" class="dropdown-item">Noida</a>
+                               <a href="{{ url('/properties/Faridabad') }}" class="dropdown-item">Faridabad</a>
+                               <a href="{{ url('/properties/Delhi') }}" class="dropdown-item">Delhi</a>
 
                             </div>
                         </div>
