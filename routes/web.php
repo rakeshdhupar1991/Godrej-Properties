@@ -19,24 +19,5 @@ use App\Http\Controllers\PropertiesController;
 
 //Welcome
 Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
 
-Route::get('/properties', [PropertiesController::class, 'properties'])->name('properties');
-
-// routes/web.php
-Route::get('/properties', function () {
-    return view('pages.properties');
-})->name('properties');
-
-
-/*Route::get('/properties', function () {
-    return view('pages.properties'); // This will return the about.blade.php view
-});*/
-
-// Home Page
-//Route::get('/', [PageController::class, 'home'])->name('home');
-
-route::get('/index',[TemplateController::class,'index']);
-route::get('/property',[PropertyController::class,'property']);
+Route::get('/location/{city}', [PropertiesController::class, 'properties']);

@@ -28,14 +28,11 @@
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" >Location</a>
                             <div class="dropdown-menu rounded-0 m-0">
                          
-                            <a href="{{ url('/properties') }}" class="dropdown-item">Gurgaon</a>
-                                <!--<a href="/properties" class="dropdown-item">Gurgaon</a>
-                                <a href="/properties" class="dropdown-item">Noida</a>
-                                <a href="/properties" class="dropdown-item">Faridabad</a>
-                                <a href="/properties" class="dropdown-item">Delhi</a>-->
-                                <!--<a href="property-type.html" class="dropdown-item">Noida</a>
-                                <a href="property-agent.html" class="dropdown-item">Faridabad</a>
-                                <a href="property-agent.html" class="dropdown-item">Delhi</a>-->
+                               <a href="{{ url('/location/Gurgaon') }}" class="dropdown-item">Gurgaon</a>
+                               <a href="{{ url('/location/Noida') }}" class="dropdown-item">Noida</a>
+                               <a href="{{ url('/location/Faridabad') }}" class="dropdown-item">Faridabad</a>
+                               <a href="{{ url('/location/Delhi') }}" class="dropdown-item">Delhi</a>
+
                             </div>
                         </div>
                         <div class="nav-item dropdown">
