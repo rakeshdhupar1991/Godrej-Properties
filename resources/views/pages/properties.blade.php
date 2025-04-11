@@ -1,9 +1,20 @@
+
 @extends('layouts.app')
 
 @section('title', 'Godrej Properties')
 
 @section('content')
 <div class="container-xxl bg-white p-0">
+
+<script>
+    function goToProperty(el) {
+        const url = el.getAttribute('data-href');
+        if (url) {
+            window.location.href = url;
+        }
+    }
+
+</script>
 
         <!-- Search Start -->
         <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
@@ -80,10 +91,10 @@
                                     <p>BHK: {{ $property->bhk }}</p>
                                 </div>-->
 
-                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" onclick="goToProperty(this)" href="{{ url('/property/' . $property->id) }}" style="cursor: pointer;">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="{{ asset('img/property-1.jpg') }}" alt=""></a>
+                                        <a href="{{ url('/property/' . $property->id) }}" ><img src="{{ route('property.image', $property->id) }}" class="img-fluid" alt="Property Image"></a>
                                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Sell</div>
                                         <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{{ $property->property_type }}</div>
                                     </div>
@@ -139,6 +150,6 @@
         <!-- Call to Action End -->
         
         <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+       <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>-->
     </div>
 @endsection

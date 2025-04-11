@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\PropertyController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\PropertiesController;
+use App\Http\Controllers\PropertyDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,5 @@ use App\Http\Controllers\PropertiesController;
 Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
 
 Route::get('/properties/{city}', [PropertiesController::class, 'location']);
+Route::get('/property/{id}', [PropertyDetailController::class, 'show']);
+Route::get('/property-image/{id}', [PropertyDetailController::class, 'getImage'])->name('property.image');
