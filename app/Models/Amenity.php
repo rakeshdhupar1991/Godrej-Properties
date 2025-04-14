@@ -9,5 +9,9 @@ class Amenity extends Model
 {
     //protected $table = 'amenities'; // if your table is singular
     use HasFactory;
-    protected $fillable = ['amenity_name']; // ✅ Add this line
+    protected $primaryKey = 'amenity_id';
+
+    protected $fillable = ['amenities_name'];
+
+    public $timestamps = true;
 }

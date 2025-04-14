@@ -9,5 +9,9 @@ class ProjectHighlight extends Model
 {
     //protected $table = 'project_highlights'; // if your table is singular
     use HasFactory;
-    protected $fillable = ['project_highlights_name	']; // ✅ Add this line
+    protected $table = 'project_highlights';
+
+    protected $fillable = ['name'];
+
+    public $timestamps = true;
 }

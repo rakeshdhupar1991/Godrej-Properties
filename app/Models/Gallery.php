@@ -9,5 +9,7 @@ class Gallery extends Model
 {
     //protected $table = 'gallery'; // if your table is singular
     use HasFactory;
-    protected $fillable = ['gallery_name']; // ✅ Add this line
+    protected $table = 'gallery'; // Match your table name
+    protected $primaryKey = 'gallery_id'; // Custom PK
+    protected $fillable = ['gallery_name', 'gallery_url'];
 }

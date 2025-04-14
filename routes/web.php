@@ -8,6 +8,11 @@ use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\PropertyDetailController;
 use App\Http\Controllers\Admin\PropertyControllerAdmin;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ConfigurationController;
+use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\AmenityController;
+use App\Http\Controllers\Admin\ProjectHighlightController;
+use \App\Http\Controllers\Admin\LocationAdvantageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +38,24 @@ Route::get('/property-image/{id}', [PropertyDetailController::class, 'getImage']
 Route::get('/admin/master-entry', [AdminController::class, 'createMasterData'])->name('admin.master-entry');
 Route::post('/admin/master-entry', [AdminController::class, 'storeMasterData'])->name('admin.master-entry.store');
 
+
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('/admin/configuration/create', [ConfigurationController::class, 'create'])->name('admin.configuration.create');
-    Route::post('/admin/configuration/store', [ConfigurationController::class, 'store'])->name('admin.configuration.store');
+    Route::get('configuration/create', [ConfigurationController::class, 'create'])->name('configuration.create');
+    Route::post('configuration/store', [ConfigurationController::class, 'store'])->name('configuration.store');
+    
+    Route::get('gallery/create', [GalleryController::class, 'create'])->name('gallery.create');
+    Route::post('gallery/store', [GalleryController::class, 'store'])->name('gallery.store');
 
     Route::get('/create', [PropertyControllerAdmin::class, 'create'])->name('create');
     Route::post('/store', [PropertyControllerAdmin::class, 'store'])->name('store');
+
+    Route::resource('configuration', ConfigurationController::class);
+
+    // ✅ Add this for amenities resource routes
+    Route::resource('amenities', AmenityController::class);
+
+    Route::resource('project_highlights', ProjectHighlightController::class);
+
+    Route::resource('location_advantages', LocationAdvantageController::class);
 });

@@ -5,96 +5,63 @@
     <meta charset="utf-8">
 </head>
 <body>
-    <h2>Create New Property</h2>
-
-    @if ($errors->any())
-        <div style="color:red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form method="POST" action="{{ route('admin.store') }}">
+    <form method="POST" action="{{ route('admin.store') }}" enctype="multipart/form-data">
         @csrf
 
-        <label>Project Name:</label>
-        <input type="text" name="project_name" required><br><br>
-
-        <label>Configuration:</label>
-        <select name="configuration" required>
-            <option value="">Select Configuration</option>
-            @foreach ($configurations as $config)
-                <option value="{{ $config->config_id }}">{{ $config->name }}</option>
-            @endforeach
-        </select><br><br>
-
-
-        <label>Property Type:</label>
-        <input type="text" name="property_type_old"><br><br>
-
-        <label>Amenities:</label>
-        <select name="amenities" required>
-            <option value="">Select Amenity</option>
-            @foreach ($amenities as $amenity)
-                <option value="{{ $amenity->amenity_id }}">{{ $amenity->name }}</option>
-            @endforeach
-        </select><br><br>
-
-        <label>Gallery:</label>
-        <select name="gallery" required>
-            <option value="">Select Gallery</option>
-            @foreach ($galleries as $gallery)
-                <option value="{{ $gallery->gallery_id }}">{{ $gallery->title }}</option>
-            @endforeach
-        </select><br><br>
-
-        <label>Project Highlights:</label>
-        <select name="project_highlights" required>
-            @foreach ($projectHighlights as $highlight)
-                <option value="{{ $highlight->id }}">ID: {{ $highlight->id }}</option>
-            @endforeach
-        </select><br><br>
-
-        <label>Location Advantages:</label>
-        <select name="location_advantages" required>
-            @foreach ($locationAdvantages as $loc)
-                <option value="{{ $loc->location_advantages_id }}">{{ $loc->location_advantages_name }}</option>
-            @endforeach
-        </select><br><br>
-
-        <label>FAQs:</label>
-        <select name="faqs" required>
-            @foreach ($faqs as $faq)
-                <option value="{{ $faq->faqs_id }}">{{ $faq->faqs_name }}</option>
-            @endforeach
-        </select><br><br>
-
-        <label>Price:</label>
-        <input type="number" name="price"><br><br>
-
-        <label>Area (sq ft):</label>
-        <input type="number" name="area" required><br><br>
-
-        <label>Address:</label>
-        <input type="text" name="address" required><br><br>
-
-        <label>City:</label>
-        <input type="text" name="city"><br><br>
-
-        <label>Description:</label><br>
-        <textarea name="description" rows="5" cols="50"></textarea><br><br>
+        <h2>Property Details</h2>
+        <input name="project_name" placeholder="Project Name" required><br>
+        <input name="price" type="number" placeholder="Price"><br>
+        <input name="area" type="number" placeholder="Area (sqft)"><br>
+        <input name="address" placeholder="Address"><br>
+        <input name="city" placeholder="City"><br>
+        <textarea name="description" placeholder="Description"></textarea><br>
 
         <label>Possession:</label>
         <select name="possession" required>
             <option value="New Launch">New Launch</option>
             <option value="Under Construction">Under Construction</option>
             <option value="Ready to Move">Ready to Move</option>
-        </select><br><br>
+        </select><br>
 
-        <button type="submit">Add Property</button>
+        <label>Property Types:</label><br>
+        <input type="checkbox" name="property_type_old[]" value="Apartment"> Apartment
+        <input type="checkbox" name="property_type_old[]" value="Villa"> Villa
+        <input type="checkbox" name="property_type_old[]" value="Plot"> Plot
+        <input type="checkbox" name="property_type_old[]" value="Penthouse"> Penthouse
+        <br><br>
+
+        <h3>Configurations</h3>
+        @for($i = 0; $i < 3; $i++)
+            <input name="configurations[{{ $i }}][name]" placeholder="Name">
+            <input name="configurations[{{ $i }}][price]" type="number" placeholder="Price"><br>
+        @endfor
+
+        <h3>Amenities</h3>
+        @for($i = 0; $i < 5; $i++)
+            <input name="amenities_list[]" placeholder="Amenity Name"><br>
+        @endfor
+
+        <h3>Gallery Images</h3>
+        <label>Upload up to 10 images</label><br>
+        <input type="file" name="gallery_images[]" multiple accept="image/*"><br>
+
+        <h3>Highlights</h3>
+        @for($i = 0; $i < 3; $i++)
+            <input name="project_highlights[]" placeholder="Highlight"><br>
+        @endfor
+
+        <h3>Location Advantage</h3>
+        @for($i = 0; $i < 3; $i++)
+            <input name="location_advantages_name[]" placeholder="Location Advantage"><br>
+        @endfor
+
+        <h3>FAQ</h3>
+        @for($i = 0; $i < 3; $i++)
+            <input name="faqs_name[]" placeholder="FAQ"><br>
+        @endfor
+
+        <br>
+        <button type="submit">Submit All</button>
     </form>
 </body>
 </html>
