@@ -47,8 +47,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('gallery/create', [GalleryController::class, 'create'])->name('gallery.create');
     Route::post('gallery/store', [GalleryController::class, 'store'])->name('gallery.store');
 
+
+
     Route::get('/create', [PropertyControllerAdmin::class, 'create'])->name('create');
     Route::post('/store', [PropertyControllerAdmin::class, 'store'])->name('store');
+
+    Route::get('/Allproperties', [PropertyControllerAdmin::class, 'index'])->name('index');
+    Route::get('/{id}', [PropertyControllerAdmin::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PropertyControllerAdmin::class, 'edit'])->name('edit');
+    Route::delete('/{id}', [PropertyControllerAdmin::class, 'destroy'])->name('destroy');
+
 
     Route::resource('configuration', ConfigurationController::class);
 

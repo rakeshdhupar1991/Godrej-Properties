@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 use App\Models\Configuration;
 use App\Models\Amenity;
@@ -18,132 +19,115 @@ class PropertyControllerAdmin extends Controller
 {
 
     public function create()
-{
-    return view('admin.create');
-}
+    {
+        return view('admin.create');
+    }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'project_name' => 'required|string|max:100',
-        'price' => 'nullable|numeric',
-        'area' => 'required|numeric',
-        'address' => 'required|string',
-        'city' => 'nullable|string|max:50',
-        'description' => 'nullable|string|max:1000',
-        'possession' => 'required|in:New Launch,Under Construction,Ready to Move',
-        'property_type_old' => 'array',
+    {
+        $request->validate([
+            'project_name' => 'required|string',
+            'price' => 'nullable|numeric',
+            'area' => 'required|numeric',
+            'address' => 'required|string',
+            'city' => 'nullable|string',
+            'description' => 'nullable|string',
+            'possession' => 'required|string',
+            'gallery_images.*' => 'image|mimes:jpeg,png,jpg|max:2048'
+        ]);
 
-        'configurations.*.name' => 'nullable|string|max:10',
-        'configurations.*.price' => 'nullable|numeric',
-
-        'amenities_list' => 'array',
-        'amenities_list.*' => 'nullable|string|max:50',
-
-        'project_highlights' => 'array',
-        'project_highlights.*' => 'nullable|string|max:150',
-
-        'location_advantages_name' => 'array',
-        'location_advantages_name.*' => 'nullable|string|max:150',
-
-        'faqs_name' => 'array',
-        'faqs_name.*' => 'nullable|string|max:255',
-
-        'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-
-    DB::beginTransaction();
-
-    try {
-        // Configurations
-        $configIds = [];
-        foreach ($request->configurations as $config) {
-            if (!empty($config['name']) && !empty($config['price'])) {
-                $newConfig = Configuration::create([
-                    'configuration_name' => $config['name'],
-                    'configuration_price' => $config['price'],
-                ]);
-                $configIds[] = $newConfig->config_id;
-            }
-        }
-
-        // Amenities
-        $amenityIds = [];
-        foreach ($request->amenities_list as $name) {
-            if (!empty($name)) {
-                $amenity = Amenity::firstOrCreate(['amenities_name' => $name]);
-                $amenityIds[] = $amenity->amenity_id;
-            }
-        }
-
-        // Gallery Uploads
-        $galleryIds = [];
+        // Handle gallery images
+        $galleryPaths = [];
         if ($request->hasFile('gallery_images')) {
             foreach ($request->file('gallery_images') as $image) {
-                $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $path = $image->storeAs('uploads/gallery', $filename, 'public');
-
-                $gallery = Gallery::create([
-                    'gallery_name' => $filename,
-                    'gallery_url' => '/storage/' . $path,
-                ]);
-                $galleryIds[] = $gallery->gallery_id;
+                $name = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+                $path = $image->storeAs('gallery', $name, 'public');
+                $galleryPaths[] = 'storage/' . $path;
             }
         }
 
-        // Highlights
-        $highlightIds = [];
-        foreach ($request->project_highlights as $highlight) {
-            if (!empty($highlight)) {
-                $h = ProjectHighlight::create(['name' => $highlight]);
-                $highlightIds[] = $h->id;
-            }
-        }
+        $property = new Property();
+        $property->project_name = $request->project_name;
+        $property->price = $request->price;
+        $property->area = $request->area;
+        $property->address = $request->address;
+        $property->city = $request->city;
+        $property->description = $request->description;
+        $property->possession = $request->possession;
+        $property->property_type_old = implode(',', $request->input('property_type_old', []));
+        $property->configuration = json_encode($request->input('configurations', []));
+        $property->amenities = implode(',', $request->input('amenities_list', []));
+        $property->gallery = implode(',', $galleryPaths);
+        $property->project_highlights = implode(',', $request->input('project_highlights', []));
+        $property->location_advantages = implode(',', $request->input('location_advantages_name', []));
+        $property->faqs = implode(',', $request->input('faqs_name', []));
+        $property->save();
 
-        // Location Advantages
-        $locationAdvantageIds = [];
-        foreach ($request->location_advantages_name as $name) {
-            if (!empty($name)) {
-                $la = LocationAdvantage::create(['location_advantages_name' => $name]);
-                $locationAdvantageIds[] = $la->location_advantages_id;
-            }
-        }
+        return redirect()->back()->with('success', 'Property added successfully!');
+    }
 
-        // FAQs
-        $faqIds = [];
-        foreach ($request->faqs_name as $faq) {
-            if (!empty($faq)) {
-                $f = Faq::create(['faqs_name' => $faq]);
-                $faqIds[] = $f->faqs_id;
-            }
-        }
+    public function edit($id)
+    {
+        $property = Property::findOrFail($id);
+        return view('admin.edit', compact('property'));
+    }
 
-        // Property
-        $property = Property::create([
+    public function update(Request $request, $id)
+    {
+        $property = Property::findOrFail($id);
+
+        $property->update([
             'project_name' => $request->project_name,
-            'configuration' => $configIds[0] ?? null,
-            'property_type_old' => implode(',', $request->property_type_old ?? []),
-            'amenities' => $amenityIds[0] ?? null,
-            'gallery' => $galleryIds[0] ?? null,
-            'project_highlights' => $highlightIds[0] ?? null,
-            'location_advantages' => $locationAdvantageIds[0] ?? null,
-            'faqs' => $faqIds[0] ?? null,
             'price' => $request->price,
             'area' => $request->area,
             'address' => $request->address,
             'city' => $request->city,
             'description' => $request->description,
             'possession' => $request->possession,
+            'property_type_old' => implode(',', $request->input('property_type_old', [])),
+            'configuration' => json_encode($request->input('configurations', [])),
+            'amenities' => implode(',', $request->input('amenities_list', [])),
+            'project_highlights' => implode(',', $request->input('project_highlights', [])),
+            'location_advantages' => implode(',', $request->input('location_advantages_name', [])),
+            'faqs' => implode(',', $request->input('faqs_name', []))
         ]);
 
-        DB::commit();
-        return redirect()->back()->with('success', 'Property created successfully!');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return redirect()->back()->with('error', 'Error saving property: ' . $e->getMessage());
-    }
-}
+        // Optional: update gallery
+        if ($request->hasFile('gallery_images')) {
+            $galleryPaths = [];
+            foreach ($request->file('gallery_images') as $image) {
+                $name = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+                $path = $image->storeAs('gallery', $name, 'public');
+                $galleryPaths[] = 'storage/' . $path;
+            }
+            $property->gallery = implode(',', $galleryPaths);
+            $property->save();
+        }
 
+        return redirect()->back()->with('success', 'Property updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $property = Property::findOrFail($id);
+        $property->delete();
+
+        return redirect()->back()->with('success', 'Property deleted.');
+    }
+
+    public function index()
+    {
+        // Fetch properties with pagination (10 per page)
+        $properties = Property::orderBy('id', 'desc')->paginate(10);
+
+        return view('admin.Allproperties', compact('properties'));
+    }
+
+    public function show($id)
+    {
+        $property = Property::findOrFail($id);
+        return view('admin.show', compact('property'));
+    }
     
 }
 
