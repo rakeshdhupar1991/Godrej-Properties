@@ -63,6 +63,44 @@
             margin: auto;
         }
     </style>
+
+<script>
+    function addHighlight() {
+        const wrapper = document.getElementById('highlight-wrapper');
+
+        const div = document.createElement('div');
+        div.classList.add('input-group', 'mb-2');
+        div.innerHTML = `
+            <input name="project_highlights[]" class="form-control" placeholder="Add Project Highlight">
+            <button type="button" class="btn btn-danger" onclick="removeHighlight(this)">×</button>
+        `;
+
+        wrapper.appendChild(div);
+    }
+
+    function removeHighlight(button) {
+        button.closest('.input-group').remove();
+    }
+
+     // Add Location Advantage
+     function addAdvantages() {
+        const wrapper = document.getElementById('advantages-wrapper');
+
+        const div = document.createElement('div');
+        div.classList.add('input-group', 'mb-2');
+        div.innerHTML = `
+            <input name="location_advantages_name[]" class="form-control" placeholder="Add Location Advantages">
+            <button type="button" class="btn btn-danger" onclick="removeAdvantages(this)">×</button>
+        `;
+        wrapper.appendChild(div);
+    }
+
+    // Remove Location Advantage
+    function removeAdvantages(button) {
+        button.closest('.input-group').remove();
+    }
+</script>
+
 </head>
 <body>
 
@@ -95,7 +133,7 @@
 
             <div class="form-group">
                 <label>Area (sqft)</label>
-                <input name="area" type="number" class="form-control" placeholder="Area (sqft)">
+                <input name="area" type="text" class="form-control" placeholder="Area (sqft) Ex: 250 - 500 sqft">
             </div>
 
             <div class="form-group">
@@ -172,28 +210,24 @@
             </div>
 
             <h3>Highlights</h3>
-            @php
-                $highlightOptions = ['Close to Metro', 'RERA Approved', 'Low Density Project', 'Greenery Views', 'Smart Homes', 'Gated Community'];
-            @endphp
-            <div class="form-group">
-                <select name="project_highlights[]" class="form-select" multiple>
-                    @foreach ($highlightOptions as $highlight)
-                        <option value="{{ $highlight }}">{{ $highlight }}</option>
-                    @endforeach
-                </select>
+            <div id="highlight-wrapper">
+                <div class="input-group mb-2">
+                    <input name="project_highlights[]" class="form-control" placeholder="Add Project Highlight">
+                    <button type="button" class="btn btn-danger" onclick="removeHighlight(this)">×</button>
+                </div>
             </div>
 
+            <button type="button" class="btn btn-sm btn-outline-primary mb-3" onclick="addHighlight()">+ Add More</button>   
+
             <h3>Location Advantages</h3>
-            @php
-                $locationOptions = ['Near School', 'Close to Hospital', 'Metro Station Nearby', 'Shopping Mall', 'Highway Access', 'Airport within 30 mins'];
-            @endphp
-            <div class="form-group">
-                <select name="location_advantages_name[]" class="form-select" multiple>
-                    @foreach ($locationOptions as $location)
-                        <option value="{{ $location }}">{{ $location }}</option>
-                    @endforeach
-                </select>
+            <div id="advantages-wrapper">
+                <div class="input-group mb-2">
+                    <input name="location_advantages_name[]" class="form-control" placeholder="Add Location Advantages">
+                    <button type="button" class="btn btn-danger" onclick="removeAdvantages(this)">×</button>
+                </div>
             </div>
+
+            <button type="button" class="btn btn-sm btn-outline-primary mb-3" onclick="addAdvantages()">+ Add More</button>
 
             <h3>FAQ</h3>
             @for($i = 0; $i < 3; $i++)

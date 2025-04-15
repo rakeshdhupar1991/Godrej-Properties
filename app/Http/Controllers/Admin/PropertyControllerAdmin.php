@@ -28,7 +28,7 @@ class PropertyControllerAdmin extends Controller
         $request->validate([
             'project_name' => 'required|string',
             'price' => 'nullable|numeric',
-            'area' => 'required|numeric',
+            'area' => 'required|string',
             'address' => 'required|string',
             'city' => 'nullable|string',
             'description' => 'nullable|string',
@@ -58,8 +58,17 @@ class PropertyControllerAdmin extends Controller
         $property->configuration = json_encode($request->input('configurations', []));
         $property->amenities = implode(',', $request->input('amenities_list', []));
         $property->gallery = implode(',', $galleryPaths);
-        $property->project_highlights = implode(',', $request->input('project_highlights', []));
-        $property->location_advantages = implode(',', $request->input('location_advantages_name', []));
+
+        $highlights = array_filter($request->input('project_highlights', []));
+        $property->project_highlights = json_encode(
+            array_map(fn($highlight) => ['name' => trim($highlight)], $highlights)
+        );
+       
+        $advantages = array_filter($request->input('location_advantages_name', [])); // fixed input name
+        $property->location_advantages = json_encode(
+            array_map(fn($adv) => ['name' => trim($adv)], $advantages)
+        );
+
         $property->faqs = implode(',', $request->input('faqs_name', []));
         $property->save();
 
@@ -87,7 +96,15 @@ class PropertyControllerAdmin extends Controller
             'property_type_old' => implode(',', $request->input('property_type_old', [])),
             'configuration' => json_encode($request->input('configurations', [])),
             'amenities' => implode(',', $request->input('amenities_list', [])),
-            'project_highlights' => implode(',', $request->input('project_highlights', [])),
+            
+          
+
+            'project_highlights' => json_encode(array_map(function($v) {
+                return ['name' => str_replace(',', ' ', $v)];
+            }, array_filter($request->input('project_highlights', [])))),
+
+           
+
             'location_advantages' => implode(',', $request->input('location_advantages_name', [])),
             'faqs' => implode(',', $request->input('faqs_name', []))
         ]);

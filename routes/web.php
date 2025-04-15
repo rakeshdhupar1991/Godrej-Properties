@@ -53,10 +53,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/store', [PropertyControllerAdmin::class, 'store'])->name('store');
 
     Route::get('/Allproperties', [PropertyControllerAdmin::class, 'index'])->name('index');
+    Route::get('/create', [PropertyControllerAdmin::class, 'create'])->name('create');
+    Route::post('/', [PropertyControllerAdmin::class, 'store'])->name('store');
     Route::get('/{id}', [PropertyControllerAdmin::class, 'show'])->name('show');
     Route::get('/{id}/edit', [PropertyControllerAdmin::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PropertyControllerAdmin::class, 'update'])->name('update'); // ✅ This was missing
     Route::delete('/{id}', [PropertyControllerAdmin::class, 'destroy'])->name('destroy');
-
 
     Route::resource('configuration', ConfigurationController::class);
 
